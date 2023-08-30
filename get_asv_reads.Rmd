@@ -6,25 +6,25 @@
 ## any packages are required for this code, but let me know if you run into any problems!!!
 
 ###################################################################################################################################################
-#Input the ASV string of interest. Right now this only works for one ASV
+# Input the ASV string of interest. Right now this only works for one ASV
 ASVoI <- ""
 
 # Make a vector of your sample IDs here (you can do this however you want)
 dd2_sample_ids <- basename(filts_nops_fns)
 
-#create empty list
+# create empty list
 read_list <- list()
 
 i <- NULL
 iter <- NULL
 for (i in dd2_sample_ids){
-  #map reads
+  # map reads
   read.map <- dd2[[i]]$map
   read.to.derep.sequence <- as.data.frame(drp[[i]]$uniques) %>%
     rownames_to_column(var="raw_read")
-  #merge these into one object?
+  # merge these into one object?
   read.map_w_seq <- do.call(rbind, Map(data.frame, raw_read=read.to.derep.sequence$raw_read, map_to_ASV=read.map))
-  #get the ASVs found in sample i
+  # get the ASVs found in sample i
   allASVs <- as.data.frame(dd2[[i]]$denoised) %>%
   rownames_to_column(var="ASV")
   
@@ -43,7 +43,7 @@ for (i in dd2_sample_ids){
   }
 }
 
-#calculate 'size' (num of reads total)
+# calculate 'size' (num of reads total)
 for (i in 1:length(read_list)){
   if(i==1){
     size <- length(read_list[[i]][["raw_read"]])
